@@ -33,3 +33,53 @@
   font-weight: bold;
   border-bottom: 2px solid #6aa6ff;
 }
+
+.task-form {
+  display: grid;
+  grid-template-columns: 1fr 150px 80px;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.task-form input, .task-form button {
+  padding: 8px;
+  font-size: 14px;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.column {
+  background: #151b2f;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.column h3 {
+  margin: 0 0 10px;
+}
+
+.stack {
+  display: grid;
+  gap: 10px;
+}
+
+.card {
+  background: #1f2640;
+  border-radius: 6px;
+  padding: 10px;
+  border: 1px solid rgba(255,255,255,0.1);
+
+  color: #ffffff; /* 👈 ensure text in cards is white */
+}
+
+.tag {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 0.8em;
+  color: #cccccc; /* lighter gray against dark */
+}
