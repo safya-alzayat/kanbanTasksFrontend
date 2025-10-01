@@ -1,5 +1,4 @@
-
-import type {Task} from "./types.ts"
+import type { Task } from "./types.ts";
 
 const KEY = "kanbantasks:v1"; // localStorage key
 

@@ -1,18 +1,18 @@
-import type { Task, ColumnKey } from "../types"
+import type { Task, ColumnKey } from "../types";
 
 type Props = {
-  task: Task
-  onMove: (id: string, to: ColumnKey) => void
-  onDelete: (id: string) => void
-}
+  task: Task;
+  onMove: (id: string, to: ColumnKey) => void;
+  onDelete: (id: string) => void;
+};
 
 export default function TaskItem({ task, onMove, onDelete }: Props) {
-    const columns: ColumnKey[] = ["todo", "doing", "done"]
-    const index = columns.indexOf(task.column)
-    const prevColumn = columns[index - 1]
-    const nextColumn = columns[index + 1]
+  const columns: ColumnKey[] = ["todo", "doing", "done"];
+  const index = columns.indexOf(task.column);
+  const prevColumn = columns[index - 1];
+  const nextColumn = columns[index + 1];
 
-    return (
+  return (
     <div className="card">
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <strong>{task.title}</strong>
@@ -22,14 +22,13 @@ export default function TaskItem({ task, onMove, onDelete }: Props) {
       <div style={{ display: "flex", gap: "8px", marginTop: "8px" }}>
         {/* left arrow: only if not the first column */}
         {prevColumn && (
-        <button onClick={() => onMove(task.id, prevColumn)}>↤</button>
+          <button onClick={() => onMove(task.id, prevColumn)}>↤</button>
         )}
 
         {/* right arrow: only if not the last column */}
         {nextColumn && (
-        <button onClick={() => onMove(task.id, nextColumn)}>↦</button>
+          <button onClick={() => onMove(task.id, nextColumn)}>↦</button>
         )}
-
 
         {/* delete button */}
         <button
@@ -40,5 +39,5 @@ export default function TaskItem({ task, onMove, onDelete }: Props) {
         </button>
       </div>
     </div>
-  )
+  );
 }

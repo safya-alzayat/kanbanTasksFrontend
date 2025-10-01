@@ -1,11 +1,11 @@
-import type { ReactNode } from "react"
-import type { ColumnKey } from "../types"
+import type { ReactNode } from "react";
+import type { ColumnKey } from "../types";
 
 type Props = {
-  title: string
-  column: ColumnKey
-  children: ReactNode
-}
+  title: string;
+  column: ColumnKey;
+  children: ReactNode;
+};
 
 export default function Column({ title, children }: Props) {
   return (
@@ -13,5 +13,5 @@ export default function Column({ title, children }: Props) {
       <h3>{title}</h3>
       <div className="stack">{children}</div>
     </section>
-  )
+  );
 }

@@ -1,5 +1,5 @@
-import { NavLink, Outlet } from 'react-router-dom'
-import './App.css'
+import { NavLink, Outlet } from "react-router-dom";
+import "./App.css";
 function App() {
   return (
     <div className="app-shell">
@@ -12,14 +12,14 @@ function App() {
       </header>
 
       <main className="content">
-        <Outlet />   {/* ← router puts Home/About here */}
+        <Outlet /> {/* ← router puts Home/About here */}
       </main>
 
       <footer className="footer">
         <small>Built with React + TypeScript</small>
       </footer>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

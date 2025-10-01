@@ -1,7 +1,7 @@
 type Props = {
-  tag: string
-  setTag: (value: string) => void
-}
+  tag: string;
+  setTag: (value: string) => void;
+};
 
 export default function TagFilter({ tag, setTag }: Props) {
   return (
@@ -12,5 +12,5 @@ export default function TagFilter({ tag, setTag }: Props) {
       onChange={(e) => setTag(e.target.value)}
       style={{ padding: "6px", width: "160px" }}
     />
-  )
+  );
 }

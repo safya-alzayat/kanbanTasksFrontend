@@ -1,30 +1,30 @@
-import { useState } from "react"
-import type { Task } from "../types"
+import { useState } from "react";
+import type { Task } from "../types";
 
 type Props = {
-  onAdd: (task: Task) => void
-}
+  onAdd: (task: Task) => void;
+};
 
 export default function TaskForm({ onAdd }: Props) {
   // local state for form inputs
-  const [title, setTitle] = useState("")
-  const [tag, setTag] = useState("")
+  const [title, setTitle] = useState("");
+  const [tag, setTag] = useState("");
 
   function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()           // prevent page reload
-    if (!title.trim()) return    // don’t add empty tasks
+    e.preventDefault(); // prevent page reload
+    if (!title.trim()) return; // don’t add empty tasks
 
     const newTask: Task = {
-      id: crypto.randomUUID(),   // unique id
+      id: crypto.randomUUID(), // unique id
       title: title.trim(),
       tag: tag.trim() || undefined,
-      column: "todo",            // new tasks always start in todo
-      createdAt: Date.now()
-    }
+      column: "todo", // new tasks always start in todo
+      createdAt: Date.now(),
+    };
 
-    onAdd(newTask)               // give task to parent
-    setTitle("")                 // clear form
-    setTag("")
+    onAdd(newTask); // give task to parent
+    setTitle(""); // clear form
+    setTag("");
   }
 
   return (
@@ -43,5 +43,5 @@ export default function TaskForm({ onAdd }: Props) {
       />
       <button type="submit">Add</button>
     </form>
-  )
+  );
 }

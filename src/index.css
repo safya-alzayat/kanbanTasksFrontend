@@ -1,6 +1,8 @@
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
-  margin: 0;   /* remove browser’s default margin */
+  margin: 0; /* remove browser’s default margin */
   padding: 0;
 }
 
@@ -35,7 +37,7 @@ body {
   display: block;
 
   background-color: #0b1020; /* dark background */
-  color: #ffffff;           /* 👈 make all text white by default */
+  color: #ffffff; /* 👈 make all text white by default */
   font-family: system-ui, sans-serif;
 }
 h1 {

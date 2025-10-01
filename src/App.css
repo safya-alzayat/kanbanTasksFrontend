@@ -1,10 +1,11 @@
 .app-shell {
-  min-height: 100vh;         /* take full height of the screen */
+  min-height: 100vh; /* take full height of the screen */
   display: grid;
   grid-template-rows: auto 1fr auto; /* header | main | footer */
 }
 
-.topbar, .footer {
+.topbar,
+.footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -12,12 +13,12 @@
   background-color: #1b2340;
   color: white;
 
-  width: 100%;        /* 🔑 make sure they stretch across the screen */
+  width: 100%; /* 🔑 make sure they stretch across the screen */
   box-sizing: border-box; /* include padding in width calculation */
 }
 .footer {
   justify-content: center; /* center items horizontally */
-  text-align: center;      /* also center text if there's more than one line */
+  text-align: center; /* also center text if there's more than one line */
 }
 .topbar nav a {
   margin-left: 15px;
@@ -41,7 +42,8 @@
   margin-bottom: 20px;
 }
 
-.task-form input, .task-form button {
+.task-form input,
+.task-form button {
   padding: 8px;
   font-size: 14px;
 }
@@ -72,7 +74,7 @@
   background: #1f2640;
   border-radius: 6px;
   padding: 10px;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 
   color: #ffffff; /* 👈 ensure text in cards is white */
 }

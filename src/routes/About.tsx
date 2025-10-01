@@ -4,5 +4,5 @@ export default function About() {
       <h2>About Page</h2>
       <p>This app is built with React + TypeScript + Vite.</p>
     </div>
-  )
+  );
 }
