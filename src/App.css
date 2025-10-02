@@ -1,7 +1,7 @@
 .app-shell {
   min-height: 100vh; /* take full height of the screen */
   display: grid;
-  grid-template-rows: auto 1fr auto; /* header | main | footer */
+  background-color: #0b1020;
 }
 
 .topbar,
@@ -58,11 +58,15 @@
 .column {
   background: #151b2f;
   border-radius: 8px;
-  padding: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
 }
 
 .column h3 {
-  margin: 0 0 10px;
+  margin: 0 0 12px;
+  font-size: 1.2em;
+  color: #fff;
 }
 
 .stack {
@@ -96,4 +100,80 @@
 
 .card button:hover {
   background: #3a4673;
+}
+.task-form {
+  display: grid;
+  grid-template-columns: 1fr 160px 80px;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.task-form input {
+  padding: 8px;
+  border: 1px solid #444;
+  border-radius: 6px;
+  background: #0f1430;
+  color: white;
+}
+
+.task-form input::placeholder {
+  color: #999;
+}
+
+.task-form button {
+  background: #6aa6ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.task-form button:hover {
+  background: #4f8de0;
+}
+.card {
+  background: #1f2640;
+  border-radius: 8px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.card button {
+  background: #2c355c;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.card button:hover {
+  background: #3a4673;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filters input {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #444;
+  background: #0f1430;
+  color: white;
+}
+
+.priority-low {
+  color: #4caf50; /* Green for low priority */
+}
+.priority-medium {
+  color: #ff9800; /* Orange for medium priority */
+}
+.priority-high {
+  color: #f44336; /* Red for high priority */
 }

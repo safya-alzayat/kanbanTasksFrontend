@@ -15,6 +15,9 @@ export default function TaskItem({ task, onMove, onDelete }: Props) {
   return (
     <div className="card">
       <div style={{ display: "flex", justifyContent: "space-between" }}>
+        {task.priority && (
+          <span className={`priority-${task.priority}`}>[{task.priority}]</span>
+        )}
         <strong>{task.title}</strong>
         {task.tag && <span className="tag">#{task.tag}</span>}
       </div>

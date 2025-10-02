@@ -38,7 +38,7 @@ export default function Home() {
     <div>
       <h2>Board</h2>
       <TaskForm onAdd={addTask} />
-      <div style={{ display: "flex", gap: "10px", marginBottom: "12px" }}>
+      <div className="filters">
         <SearchBar query={query} setQuery={setQuery} />
         <TagFilter tag={tag} setTag={setTag} />
       </div>

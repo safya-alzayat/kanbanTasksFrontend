@@ -9,6 +9,7 @@ export default function TaskForm({ onAdd }: Props) {
   // local state for form inputs
   const [title, setTitle] = useState("");
   const [tag, setTag] = useState("");
+  const [priority, setPriority] = useState("");
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault(); // prevent page reload
@@ -20,11 +21,13 @@ export default function TaskForm({ onAdd }: Props) {
       tag: tag.trim() || undefined,
       column: "todo", // new tasks always start in todo
       createdAt: Date.now(),
+      priority: priority.trim() || undefined,
     };
 
     onAdd(newTask); // give task to parent
     setTitle(""); // clear form
     setTag("");
+    setPriority("medium");
   }
 
   return (
@@ -41,6 +44,17 @@ export default function TaskForm({ onAdd }: Props) {
         value={tag}
         onChange={(e) => setTag(e.target.value)}
       />
+      <select
+        name="priority"
+        id="priority"
+        value={priority}
+        onChange={(e) => setPriority(e.target.value)}
+      >
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
+
       <button type="submit">Add</button>
     </form>
   );
