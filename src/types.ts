@@ -2,11 +2,11 @@ export type ColumnKey = "todo" | "doing" | "done";
 export type Priority = "high" | "medium" | "low";
 
 export interface Task {
-  id: string;
+  id?: string;
   title: string;
   notes?: string;
   tag?: string;
-  column: ColumnKey;
+  status: ColumnKey;
   priority?: string;
   createdAt: number;
 }

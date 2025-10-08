@@ -8,7 +8,7 @@ type Props = {
 
 export default function TaskItem({ task, onMove, onDelete }: Props) {
   const columns: ColumnKey[] = ["todo", "doing", "done"];
-  const index = columns.indexOf(task.column);
+  const index = columns.indexOf(task.status);
   const prevColumn = columns[index - 1];
   const nextColumn = columns[index + 1];
 

@@ -16,10 +16,9 @@ export default function TaskForm({ onAdd }: Props) {
     if (!title.trim()) return; // don’t add empty tasks
 
     const newTask: Task = {
-      id: crypto.randomUUID(), // unique id
       title: title.trim(),
       tag: tag.trim() || undefined,
-      column: "todo", // new tasks always start in todo
+      status: "todo", // new tasks always start in todo
       createdAt: Date.now(),
       priority: priority.trim() || undefined,
     };

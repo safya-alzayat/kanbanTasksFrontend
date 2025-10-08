@@ -3,15 +3,20 @@ import TaskForm from "../components/TaskForm";
 import Column from "../components/Columns.tsx";
 import TaskItem from "../components/TaskItem";
 import type { ColumnKey, Task } from "../types";
-import { loadTasks, saveTasks } from "../storage";
+import { getTasks, addTask, updateTask, deleteTask } from "../api";
 import TagFilter from "../components/Tagfilter.tsx";
 import SearchBar from "../components/SearchBar.tsx";
 
 export default function Home() {
   // state: an array of tasks
-  const [tasks, setTasks] = useState<Task[]>(() => loadTasks());
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [query, setQuery] = useState("");
   const [tag, setTag] = useState("");
+
+  useEffect(() => {
+    getTasks().then(setTasks);
+  }, []);
+
   const filteredTasks = tasks.filter((t) => {
     const matchesQuery =
       !query ||
@@ -24,20 +29,28 @@ export default function Home() {
     return matchesQuery && matchesTag;
   });
 
-  // persist tasks whenever they change
-  useEffect(() => {
-    saveTasks(tasks);
-  }, [tasks]);
-
   // function passed to TaskForm
-  function addTask(newTask: Task) {
-    setTasks((prev) => [newTask, ...prev]); // put new one at the top
+  async function handleAdd(newTask: Task) {
+    const saved = await addTask(newTask);
+    setTasks((prev) => [saved, ...prev]); // put new one at the top
+  }
+
+  async function handleMove(id: string, to: ColumnKey) {
+    const task = tasks.find((t) => t.id === id);
+    if (!task) return;
+    const updated = await updateTask(id, { ...task, status: to });
+    setTasks((prev) => prev.map((t) => (t.id === id ? updated : t)));
+  }
+
+  async function handleDelete(id: string) {
+    await deleteTask(id);
+    setTasks((prev) => prev.filter((t) => t.id !== id));
   }
 
   return (
     <div>
       <h2>Board</h2>
-      <TaskForm onAdd={addTask} />
+      <TaskForm onAdd={handleAdd} />
       <div className="filters">
         <SearchBar query={query} setQuery={setQuery} />
         <TagFilter tag={tag} setTag={setTag} />
@@ -46,53 +59,43 @@ export default function Home() {
       <div className="board">
         <Column title="Todo" column="todo">
           {filteredTasks
-            .filter((t) => t.column === "todo")
+            .filter((t) => t.status === "todo")
             .map((t) => (
               <TaskItem
                 key={t.id}
                 task={t}
-                onMove={moveTask}
-                onDelete={deleteTask}
+                onMove={handleMove}
+                onDelete={handleDelete}
               />
             ))}
         </Column>
 
         <Column title="Doing" column="doing">
           {filteredTasks
-            .filter((t) => t.column === "doing")
+            .filter((t) => t.status === "doing")
             .map((t) => (
               <TaskItem
                 key={t.id}
                 task={t}
-                onMove={moveTask}
-                onDelete={deleteTask}
+                onMove={handleMove}
+                onDelete={handleDelete}
               />
             ))}
         </Column>
 
         <Column title="Done" column="done">
           {filteredTasks
-            .filter((t) => t.column === "done")
+            .filter((t) => t.status === "done")
             .map((t) => (
               <TaskItem
                 key={t.id}
                 task={t}
-                onMove={moveTask}
-                onDelete={deleteTask}
+                onMove={handleMove}
+                onDelete={handleDelete}
               />
             ))}
         </Column>
       </div>
     </div>
   );
-
-  function moveTask(id: string, to: ColumnKey) {
-    setTasks((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, column: to } : t))
-    );
-  }
-
-  function deleteTask(id: string) {
-    setTasks((prev) => prev.filter((t) => t.id !== id));
-  }
 }
