@@ -1,13 +1,14 @@
-import type { Task } from "./types";
+import type { NewTask, Task } from "./types";
 
-const BASE_URL = "http://localhost:8080/tasks";
+
+const BASE_URL = import.meta.env.VITE_API_URL + "/tasks";
 
 export async function getTasks(): Promise<Task[]> {
   const res = await fetch(BASE_URL);
   return res.json();
 }
 
-export async function addTask(task: Omit<Task, "id">): Promise<Task> {
+export async function addTask(task: NewTask): Promise<Task> {
   const res = await fetch(BASE_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

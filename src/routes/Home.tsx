@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import TaskForm from "../components/TaskForm";
 import Column from "../components/Columns.tsx";
 import TaskItem from "../components/TaskItem";
-import type { ColumnKey, Task } from "../types";
+import type { ColumnKey, NewTask, Task } from "../types";
 import { getTasks, addTask, updateTask, deleteTask } from "../api";
 import TagFilter from "../components/Tagfilter.tsx";
 import SearchBar from "../components/SearchBar.tsx";
@@ -30,7 +30,7 @@ export default function Home() {
   });
 
   // function passed to TaskForm
-  async function handleAdd(newTask: Task) {
+  async function handleAdd(newTask: NewTask) {
     const saved = await addTask(newTask);
     setTasks((prev) => [saved, ...prev]); // put new one at the top
   }

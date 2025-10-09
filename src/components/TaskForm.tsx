@@ -1,8 +1,8 @@
 import { useState } from "react";
-import type { Task } from "../types";
+import type { NewTask } from "../types";
 
 type Props = {
-  onAdd: (task: Task) => void;
+  onAdd: (task: NewTask) => void;
 };
 
 export default function TaskForm({ onAdd }: Props) {
@@ -15,7 +15,7 @@ export default function TaskForm({ onAdd }: Props) {
     e.preventDefault(); // prevent page reload
     if (!title.trim()) return; // don’t add empty tasks
 
-    const newTask: Task = {
+    const newTask: NewTask = {
       title: title.trim(),
       tag: tag.trim() || undefined,
       status: "todo", // new tasks always start in todo
