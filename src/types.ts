@@ -8,6 +8,7 @@ export interface NewTask {
   status: ColumnKey;
   priority?: string;
   createdAt: number;
+  assignedTo?: string;
 }
 
 export interface Task extends NewTask {

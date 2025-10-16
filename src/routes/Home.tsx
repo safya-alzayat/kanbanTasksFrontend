@@ -6,11 +6,13 @@ import type { ColumnKey, NewTask, Task } from "../types";
 import { getTasksByStatus, addTask, updateTask, deleteTask } from "../api";
 import TagFilter from "../components/Tagfilter.tsx";
 import SearchBar from "../components/SearchBar.tsx";
+import AssignedToFilter from "../components/AssignedToFilter.tsx";
 
 export default function Home() {
   // state: an array of tasks
   const [query, setQuery] = useState("");
   const [tag, setTag] = useState("");
+  const [assignedTo, setAssignedTo] = useState("");
 
   const [todoTasks, setTodoTasks] = useState<Task[]>([]);
   const [doingTasks, setDoingTasks] = useState<Task[]>([]);
@@ -54,7 +56,7 @@ export default function Home() {
     await fetchTasks();
   }
 
-  function matchesQueryAndTag(t: Task): boolean {
+  function matchesQueryAndTagAndAssignee(t: Task): boolean {
     const matchesQuery =
       !query ||
       t.title.toLowerCase().includes(query.toLowerCase()) ||
@@ -63,7 +65,10 @@ export default function Home() {
     const matchesTag =
       !tag || (t.tag && t.tag.toLowerCase() === tag.toLowerCase());
 
-    return Boolean(matchesQuery && matchesTag);
+    const matchesAssignee =
+      !assignedTo || (t.assignedTo && t.assignedTo.toLowerCase() === assignedTo.toLowerCase());
+
+    return Boolean(matchesQuery && matchesTag && matchesAssignee);
   }
 
   return (
@@ -73,12 +78,16 @@ export default function Home() {
       <div className="filters">
         <SearchBar query={query} setQuery={setQuery} />
         <TagFilter tag={tag} setTag={setTag} />
+        <AssignedToFilter
+          assignedTo={assignedTo}
+          setAssignedTo={setAssignedTo}
+        />
       </div>
 
       <div className="board">
         <Column title="Todo" column="todo">
           {todoTasks
-            .filter((t) => matchesQueryAndTag(t)) // optional if you want filtering
+            .filter((t) => matchesQueryAndTagAndAssignee(t)) // optional if you want filtering
             .map((t) => (
               <TaskItem
                 key={t.id}
@@ -91,7 +100,7 @@ export default function Home() {
 
         <Column title="Doing" column="doing">
           {doingTasks
-            .filter((t) => matchesQueryAndTag(t))
+            .filter((t) => matchesQueryAndTagAndAssignee(t))
             .map((t) => (
               <TaskItem
                 key={t.id}
@@ -104,7 +113,7 @@ export default function Home() {
 
         <Column title="Done" column="done">
           {doneTasks
-            .filter((t) => matchesQueryAndTag(t))
+            .filter((t) => matchesQueryAndTagAndAssignee(t))
             .map((t) => (
               <TaskItem
                 key={t.id}
