@@ -29,3 +29,8 @@ export async function updateTask(id: string, task: Task): Promise<Task> {
 export async function deleteTask(id: string): Promise<void> {
   await fetch(`${BASE_URL}/${id}`, { method: "DELETE" });
 }
+
+export async function getTasksByStatus(status: string): Promise<Task[]> {
+  const res = await fetch(`${BASE_URL}/status/${status}`);
+  return res.json();
+}

@@ -26,7 +26,7 @@ export default function TaskForm({ onAdd }: Props) {
     onAdd(newTask); // give task to parent
     setTitle(""); // clear form
     setTag("");
-    setPriority("medium");
+    setPriority("MID");
   }
 
   return (
@@ -49,9 +49,9 @@ export default function TaskForm({ onAdd }: Props) {
         value={priority}
         onChange={(e) => setPriority(e.target.value)}
       >
-        <option value="low">Low</option>
-        <option value="medium">Medium</option>
-        <option value="high">High</option>
+        <option value="LOW">LOW</option>
+        <option value="MID">MID</option>
+        <option value="HIGH">HIGH</option>
       </select>
 
       <button type="submit">Add</button>

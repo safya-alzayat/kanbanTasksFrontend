@@ -3,21 +3,58 @@ import TaskForm from "../components/TaskForm";
 import Column from "../components/Columns.tsx";
 import TaskItem from "../components/TaskItem";
 import type { ColumnKey, NewTask, Task } from "../types";
-import { getTasks, addTask, updateTask, deleteTask } from "../api";
+import { getTasksByStatus, addTask, updateTask, deleteTask } from "../api";
 import TagFilter from "../components/Tagfilter.tsx";
 import SearchBar from "../components/SearchBar.tsx";
 
 export default function Home() {
   // state: an array of tasks
-  const [tasks, setTasks] = useState<Task[]>([]);
   const [query, setQuery] = useState("");
   const [tag, setTag] = useState("");
 
+  const [todoTasks, setTodoTasks] = useState<Task[]>([]);
+  const [doingTasks, setDoingTasks] = useState<Task[]>([]);
+  const [doneTasks, setDoneTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<Task[]>([]); // all tasks for easy searching/filtering
+  
+  async function fetchTasks() {
+    const [todo, doing, done] = await Promise.all([
+      getTasksByStatus("todo"),
+      getTasksByStatus("doing"),
+      getTasksByStatus("done"),
+    ]);
+    setTodoTasks(todo);
+    setDoingTasks(doing);
+    setDoneTasks(done);
+    setTasks([...todo, ...doing, ...done]);
+  }
+  
   useEffect(() => {
-    getTasks().then(setTasks);
+    fetchTasks();
   }, []);
 
-  const filteredTasks = tasks.filter((t) => {
+  // function passed to TaskForm
+  async function handleAdd(newTask: NewTask) {
+    const saved = await addTask(newTask);
+    setTasks((prev) => [saved, ...prev]); // put new one at the top
+    await fetchTasks();
+  }
+
+  async function handleMove(id: string, to: ColumnKey) {
+    const task = tasks.find((t) => t.id === id);
+    if (!task) return;
+    const updated = await updateTask(id, { ...task, status: to });
+    setTasks((prev) => prev.map((t) => (t.id === id ? updated : t)));
+    await fetchTasks();
+  }
+
+  async function handleDelete(id: string) {
+    await deleteTask(id);
+    setTasks((prev) => prev.filter((t) => t.id !== id));
+    await fetchTasks();
+  }
+
+  function matchesQueryAndTag(t: Task): boolean {
     const matchesQuery =
       !query ||
       t.title.toLowerCase().includes(query.toLowerCase()) ||
@@ -26,25 +63,7 @@ export default function Home() {
     const matchesTag =
       !tag || (t.tag && t.tag.toLowerCase() === tag.toLowerCase());
 
-    return matchesQuery && matchesTag;
-  });
-
-  // function passed to TaskForm
-  async function handleAdd(newTask: NewTask) {
-    const saved = await addTask(newTask);
-    setTasks((prev) => [saved, ...prev]); // put new one at the top
-  }
-
-  async function handleMove(id: string, to: ColumnKey) {
-    const task = tasks.find((t) => t.id === id);
-    if (!task) return;
-    const updated = await updateTask(id, { ...task, status: to });
-    setTasks((prev) => prev.map((t) => (t.id === id ? updated : t)));
-  }
-
-  async function handleDelete(id: string) {
-    await deleteTask(id);
-    setTasks((prev) => prev.filter((t) => t.id !== id));
+    return Boolean(matchesQuery && matchesTag);
   }
 
   return (
@@ -58,8 +77,8 @@ export default function Home() {
 
       <div className="board">
         <Column title="Todo" column="todo">
-          {filteredTasks
-            .filter((t) => t.status === "todo")
+          {todoTasks
+            .filter((t) => matchesQueryAndTag(t)) // optional if you want filtering
             .map((t) => (
               <TaskItem
                 key={t.id}
@@ -71,8 +90,8 @@ export default function Home() {
         </Column>
 
         <Column title="Doing" column="doing">
-          {filteredTasks
-            .filter((t) => t.status === "doing")
+          {doingTasks
+            .filter((t) => matchesQueryAndTag(t))
             .map((t) => (
               <TaskItem
                 key={t.id}
@@ -84,8 +103,8 @@ export default function Home() {
         </Column>
 
         <Column title="Done" column="done">
-          {filteredTasks
-            .filter((t) => t.status === "done")
+          {doneTasks
+            .filter((t) => matchesQueryAndTag(t))
             .map((t) => (
               <TaskItem
                 key={t.id}

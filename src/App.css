@@ -168,12 +168,12 @@
   color: white;
 }
 
-.priority-low {
+.priority-LOW {
   color: #4caf50; /* Green for low priority */
 }
-.priority-medium {
+.priority-MID {
   color: #ff9800; /* Orange for medium priority */
 }
-.priority-high {
+.priority-HIGH {
   color: #f44336; /* Red for high priority */
 }

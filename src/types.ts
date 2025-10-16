@@ -1,5 +1,5 @@
 export type ColumnKey = "todo" | "doing" | "done";
-export type Priority = "high" | "medium" | "low";
+export type Priority = "HIGH" | "MID" | "LOW";
 
 export interface NewTask {
   title: string;
